@@ -1,9 +1,4 @@
--- ==========================================
--- WARSTWA SREBRNA (CLEANED)
--- ==========================================
 
--- 1. Tworzymy Słownik Produktów (Wymiar)
--- Oczyszczamy dane: usuwamy puste marki i ujemne ceny
 CREATE TABLE silver_products AS
 SELECT DISTINCT 
     product_id, 
@@ -14,8 +9,7 @@ FROM raw_events
 WHERE brand IS NOT NULL 
   AND price > 0;
 
--- 2. Tworzymy Tabelę Zdarzeń (Fakty)
--- Zostawiamy tylko najważniejsze kolumny i formatujemy czas
+
 CREATE TABLE silver_events AS
 SELECT 
     CAST(event_time AS TIMESTAMP) AS event_time,
@@ -26,12 +20,9 @@ SELECT
 FROM raw_events
 WHERE user_id IS NOT NULL;
 
--- ==========================================
--- WARSTWA ZŁOTA (CURATED)
--- ==========================================
 
--- 3. Tworzymy gotowy raport biznesowy (Wymagany JOIN i Agregacja)
--- Analiza lejka sprzedażowego marek (wyświetlenia vs zakupy)
+
+
 CREATE TABLE gold_brand_funnel AS
 SELECT 
     p.brand,
